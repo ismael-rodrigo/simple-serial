@@ -1,0 +1,33 @@
+#include<iostream>
+using namespace std;
+#include<string>
+#include<stdlib.h>
+#include"SerialPort.h"
+
+
+
+
+int main(){
+    SerialPort serial(port , 9600);
+
+	if(serial.isConnected()){
+		cout<<"Connection made"<<endl<<endl;
+	}
+	else{
+		cout<<"Error in port name"<<endl<<endl;
+	}
+	while(serial.isConnected()){
+		cout<<"Enter your command: "<<endl;
+		string data;
+		cin>>data;
+
+		char *charArray = new char[data.size()];
+		copy(data.begin(), data.end(), charArray);
+		serial.writeSerialPort(charArray, data.size());
+        	serial.readSerialPort(output, MAX_DATA_LENGTH);
+
+		cout<<">> "<<output<<endl;
+		delete [] charArray;
+	}
+	return 0;
+}
