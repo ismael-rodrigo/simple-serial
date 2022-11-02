@@ -21,7 +21,7 @@ public:
 
     int readSerialPort(char *buffer, unsigned int buf_size);
     bool writeSerialPort(char *buffer, unsigned int buf_size);
-    int awaitReadSerialPort(int time_out ,char *buffer, unsigned int buf_size );
+    bool awaitReadSerialPort(int time_out ,char *buffer, unsigned int buf_size );
     bool isConnected();
 };
 

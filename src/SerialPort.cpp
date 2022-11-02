@@ -88,7 +88,7 @@ bool SerialPort::writeSerialPort(char *buffer, unsigned int buf_size)
 }
 
 
-int SerialPort::awaitReadSerialPort(int time_out ,char *buffer, unsigned int buf_size )
+bool SerialPort::awaitReadSerialPort(int time_out ,char *buffer, unsigned int buf_size )
 {
 
     time_t pref_timestart = time(0);
@@ -96,9 +96,10 @@ int SerialPort::awaitReadSerialPort(int time_out ,char *buffer, unsigned int buf
 	do {
 		time_t pref_timefinish = time(0);
         pref_timeduration = pref_timefinish - pref_timestart;
-		SerialPort::readSerialPort(buffer,buf_size);
+		if(SerialPort::readSerialPort(buffer,buf_size) > 0) return true;
 	}
 	while (pref_timeduration < time_out);
+    return false;
     
 }
 
