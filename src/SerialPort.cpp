@@ -1,4 +1,6 @@
 #include "SerialPort.h"
+#include <chrono>
+#include <thread>
 
 using namespace std;
 SerialPort::SerialPort(const char *portName , const UINT32 baud)
@@ -84,6 +86,22 @@ bool SerialPort::writeSerialPort(char *buffer, unsigned int buf_size)
     }
     else return true;
 }
+
+
+int SerialPort::awaitReadSerialPort(int time_out ,char *buffer, unsigned int buf_size )
+{
+
+    time_t pref_timestart = time(0);
+	int pref_timeduration = 0;
+	do {
+		time_t pref_timefinish = time(0);
+        pref_timeduration = pref_timefinish - pref_timestart;
+		SerialPort::readSerialPort(buffer,buf_size);
+	}
+	while (pref_timeduration < time_out);
+    
+}
+
 
 bool SerialPort::isConnected()
 {
